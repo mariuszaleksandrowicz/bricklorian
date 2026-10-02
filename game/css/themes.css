@@ -1,0 +1,70 @@
+/* BRICKLORIAN
+   Created by Mariusz Aleksandrowicz via AI-driven workflows.
+   Licensed under the MIT License. */
+  /* ============ THEME VARIABLES ============ */
+  body[data-theme="classic"] {
+    --bg: #1a1a2e;
+    --panel: #25254a; --panel-border: #3f3f6a; --card: rgba(255,255,255,.06);
+    --board-bg: #000; --frame: #444;
+    --accent: #00f0f0; --accent2: #a000f0; --btn-text: #04121a;
+    --glow: 0 14px 44px rgba(0,0,0,.55);
+    --text: #eee;
+  }
+  body[data-theme="neon"] {
+    --bg:
+      radial-gradient(820px 420px at 75% -5%, rgba(255,47,214,.20), transparent 60%),
+      radial-gradient(720px 520px at 8% 105%, rgba(0,245,255,.16), transparent 60%),
+      linear-gradient(165deg, #0d0221, #1a0533 55%, #32105a);
+    --panel: rgba(18,8,40,.88); --panel-border: #b41f9e; --card: rgba(0,255,255,.05);
+    --board-bg: #0a0518; --frame: #ff2fd6;
+    --accent: #ff2fd6; --accent2: #00f0ff; --btn-text: #180330;
+    --glow: 0 0 55px rgba(255,47,214,.30), 0 0 25px rgba(0,240,255,.18);
+    --text: #e8e6ff;
+  }
+  body[data-theme="rune"] {
+    --bg:
+      radial-gradient(900px 500px at 50% -12%, #4a2c14, transparent 62%),
+      radial-gradient(700px 480px at 50% 112%, #33200f, transparent 65%),
+      linear-gradient(180deg, #241811, #140c06);
+    --panel: #3a2817; --panel-border: #c9973f; --card: rgba(255,220,150,.05);
+    --board-bg: #1a0f07; --frame: #c9973f;
+    --accent: #e0a33c; --accent2: #8e5a25; --btn-text: #241505;
+    --glow: 0 14px 44px rgba(0,0,0,.65);
+    --text: #f3e2c2;
+  }
+  body[data-theme="space"] {
+    --bg:
+      radial-gradient(1.3px 1.3px at 12% 22%, rgba(255,255,255,.85), transparent 60%),
+      radial-gradient(1px 1px at 78% 14%, rgba(255,255,255,.6), transparent 60%),
+      radial-gradient(1.5px 1.5px at 34% 64%, rgba(255,255,255,.55), transparent 60%),
+      radial-gradient(1px 1px at 62% 42%, rgba(200,220,255,.75), transparent 60%),
+      radial-gradient(1px 1px at 88% 76%, rgba(255,255,255,.5), transparent 60%),
+      radial-gradient(1.4px 1.4px at 20% 86%, rgba(255,255,255,.5), transparent 60%),
+      radial-gradient(1px 1px at 45% 8%, rgba(255,255,255,.65), transparent 60%),
+      radial-gradient(1px 1px at 5% 55%, rgba(255,255,255,.45), transparent 60%),
+      #04060f;
+    --panel: rgba(11,15,27,.88); --panel-border: #5c6d94; --card: rgba(160,190,255,.05);
+    --board-bg: #04060d; --frame: #7f8db0;
+    --accent: #ffd700; --accent2: #7f8db0; --btn-text: #0b1020;
+    --glow: 0 0 55px rgba(140,170,255,.25);
+    --text: #dfe6f5;
+  }
+
+  /* ============ LOGO PER THEME ============ */
+  body[data-theme="classic"] #logo {
+    font-family: 'Arial Black', Arial, sans-serif; font-weight: 900; letter-spacing: .05em;
+  }
+  body[data-theme="neon"] #logo {
+    font-family: 'Orbitron', 'Arial Black', Arial, sans-serif;
+    font-weight: 900; letter-spacing: .1em; font-size: clamp(2rem, 5.6vw, 3.2rem);
+    background-image: linear-gradient(95deg, #00f8ff 5%, #ffffff 50%, #ff2fd6 95%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 9px rgba(0,248,255,.40)) drop-shadow(0 0 24px rgba(255,47,214,.28));
+  }
+  body[data-theme="rune"] #logo {
+    font-family: Georgia, 'Times New Roman', serif; font-weight: 700; letter-spacing: .06em;
+  }
+  body[data-theme="space"] #logo {
+    font-weight: 300; font-family: 'Segoe UI', Arial, sans-serif;
+    letter-spacing: .12em; padding-left: .12em; font-size: clamp(2rem, 5.6vw, 3.2rem);
+  }

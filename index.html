@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+  BRICKLORIAN — title / landing page (title art, music toggle)
+  Created by Mariusz Aleksandrowicz via AI-driven workflows.
+  Licensed under the MIT License.
+-->
+
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Mariusz Aleksandrowicz">
+<meta name="description" content="BRICKLORIAN — This is the way... to stack bricks. Pure HTML/CSS/JS falling-block game: 4 themed worlds, 36 languages, 7-track original OST.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bricklorian.net/">
+<meta property="og:title" content="BRICKLORIAN — This is the way... to stack bricks.">
+<meta property="og:description" content="Pure HTML/CSS/JS falling-block game: 4 themed worlds, 36 languages, 7-track original OST.">
+<meta property="og:image" content="https://bricklorian.net/pics/title.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<title>BRICKLORIAN</title>
+<link rel="icon" type="image/png" href="pics/favicon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: #ffffff;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+  }
+  .wrap { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 0 16px; }
+  a.title {
+    display: block;
+    width: min(88vw, 760px);
+    cursor: pointer;
+    transition: transform .25s ease, filter .25s ease;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, .14));
+  }
+  a.title img { display: block; width: 100%; height: auto; }
+  a.title:hover {
+    transform: scale(1.03);
+    filter: drop-shadow(0 18px 44px rgba(0, 0, 0, .22));
+  }
+  #sound {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px; letter-spacing: .05em;
+    color: #4a4a4a; background: #ffffff;
+    border: 1.5px solid #d5d5d5; border-radius: 999px;
+    padding: 9px 24px; cursor: pointer;
+    transition: border-color .2s, color .2s, background .2s, transform .15s;
+  }
+  #sound:hover { border-color: #4a4a4a; transform: translateY(-1px); }
+  #sound.on { background: #3c3c3c; border-color: #3c3c3c; color: #ffffff; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="title" href="game/index.html"><img src="pics/title.jpg" alt="BRICKLORIAN — kliknij, aby zagrać"></a>
+    <button id="sound" type="button" aria-pressed="false">Enable music</button>
+  </div>
+  <script>
+    (function () {
+      // Button label follows the browser language (fallback: English)
+      const LANG = (navigator.language || (navigator.languages && navigator.languages[0]) || 'en').toLowerCase();
+      const L = {
+        enable: {
+          en: 'Enable music', pl: 'Włącz muzykę', de: 'Musik aktivieren', fr: 'Activer la musique',
+          es: 'Activar la música', it: 'Attiva la musica', pt: 'Ativar a música', nl: 'Muziek aanzetten',
+          sv: 'Slå på musiken', no: 'Slå på musikk', da: 'Slå musik til', fi: 'Laita musiikki päälle',
+          cs: 'Zapnout hudbu', sk: 'Zapnúť hudbu', sl: 'Vklopi glasbo', hr: 'Uključi glazbu',
+          hu: 'Zene bekapcsolása', et: 'Lülita muusika sisse', lv: 'Ieslēgt mūziku', lt: 'Įjungti muziką',
+          ro: 'Activează muzica', el: 'Ενεργοποίηση μουσικής', tr: 'Müziği aç', ru: 'Включить музыку',
+          uk: 'Увімкнути музику', vi: 'Bật nhạc', th: 'เปิดเพลง', id: 'Nyalakan musik',
+          zh: '启用音乐', ja: '音楽をオンにする', ko: '음악 켜기'
+        },
+        disable: {
+          en: 'Disable music', pl: 'Wyłącz muzykę', de: 'Musik ausschalten', fr: 'Désactiver la musique',
+          es: 'Desactivar la música', it: 'Disattiva la musica', pt: 'Desactivar a música', nl: 'Muziek uitzetten',
+          sv: 'Slå av musiken', no: 'Slå av musikk', da: 'Slå musik fra', fi: 'Laita musiikki pois',
+          cs: 'Vypnout hudbu', sk: 'Vypnúť hudbu', sl: 'Izklopi glasbo', hr: 'Isključi glazbu',
+          hu: 'Zene kikapcsolása', et: 'Lülita muusika välja', lv: 'Izslēgt mūziku', lt: 'Išjungti muziką',
+          ro: 'Dezactivează muzica', el: 'Απενεργοποίηση μουσικής', tr: 'Müziği kapat', ru: 'Выключить музыку',
+          uk: 'Вимкнути музику', vi: 'Tắt nhạc', th: 'ปิดเพลง', id: 'Matikan musik',
+          zh: '关闭音乐', ja: '音楽をオフにする', ko: '음악 끄기'
+        },
+      };
+      const pick = t => t[LANG] || t[LANG.slice(0, 2)] || t.en;
+
+      const btn = document.getElementById('sound');
+      const a = new Audio('music/Briclorian_Theme.mp3');
+      a.loop = true; a.volume = .6; a.preload = 'auto';
+
+      const paint = on => {
+        btn.textContent = on ? pick(L.disable) : pick(L.enable);
+        btn.classList.toggle('on', on);
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      };
+
+      btn.addEventListener('click', () => {
+        if (a.paused) a.play().then(() => paint(true)).catch(() => {});
+        else { a.pause(); paint(false); }
+      });
+
+      // Handoff to the game page: remember the playback position — if the music
+      // was started here it continues there at the same spot; if the user skips
+      // straight to the game, the game page starts it automatically.
+      document.querySelector('a.title').addEventListener('click', () => {
+        try { localStorage.setItem('bcx-handoff', JSON.stringify({ t: a.currentTime || 0 })); } catch (e) {}
+      });
+
+      paint(false);
+      a.play().catch(() => {}); // try immediately; browser decides, button always works
+    })();
+  </script>
+</body>
+</html>

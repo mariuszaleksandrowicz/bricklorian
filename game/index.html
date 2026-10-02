@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--
+  BRICKLORIAN — game page (board, panel, menu, game over, 36-language UI)
+  Created by Mariusz Aleksandrowicz via AI-driven workflows.
+  Licensed under the MIT License.
+-->
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="Mariusz Aleksandrowicz">
+<meta name="description" content="BRICKLORIAN — the game. 4 themed worlds, 36 languages, 7-track original OST. Pure HTML/CSS/JS falling-block game, works offline.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bricklorian.net/game/">
+<meta property="og:title" content="BRICKLORIAN — This is the way... to stack bricks.">
+<meta property="og:description" content="4 themed worlds, 36 languages, 7-track original OST. Pure HTML/CSS/JS falling-block game.">
+<meta property="og:image" content="https://bricklorian.net/pics/title.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<title>BRICKLORIAN</title>
+<link rel="icon" type="image/png" href="../pics/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Teko:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="css/layout.css">
+</head>
+<body data-theme="classic">
+<!-- animated background layer (shown for neon / rune / space when "Animowane" selected) -->
+<div id="bgfx" aria-hidden="true">
+  <!-- static scenes: always visible for the 3 themed styles -->
+  <div class="sc sc-neon">
+    <i class="nsun"></i>
+    <i class="nbdg" style="left:0%;  width:52px; height:110px; --ed:#ff2fd6"></i>
+    <i class="nbdg" style="left:6%;  width:70px; height:170px; --ed:#00f8ff"></i>
+    <i class="nbdg" style="left:14%; width:44px; height:90px;  --ed:#ff2fd6"></i>
+    <i class="nbdg" style="left:20%; width:88px; height:140px; --ed:#00f8ff"></i>
+    <i class="nbdg" style="left:30%; width:56px; height:190px; --ed:#ff2fd6"></i>
+    <i class="nbdg" style="left:38%; width:40px; height:100px; --ed:#00f8ff"></i>
+    <i class="nbdg" style="left:44%; width:76px; height:160px; --ed:#ff2fd6"></i>
+    <i class="nbdg" style="left:54%; width:48px; height:120px; --ed:#00f8ff"></i>
+    <i class="nbdg" style="left:61%; width:92px; height:180px; --ed:#ff2fd6"></i>
+    <i class="nbdg" style="left:72%; width:52px; height:95px;  --ed:#00f8ff"></i>
+    <i class="nbdg" style="left:79%; width:72px; height:150px; --ed:#ff2fd6"></i>
+    <i class="nbdg" style="left:88%; width:46px; height:115px; --ed:#00f8ff"></i>
+    <i class="nbdg" style="left:94%; width:64px; height:165px; --ed:#ff2fd6"></i>
+    <i class="nline"></i>
+  </div>
+  <div class="sc sc-rune">
+    <i class="rmoon"></i>
+    <i class="rstone rwall"></i>
+    <i class="rwcren"></i>
+    <i class="rstone rtower l"></i>
+    <i class="rtcren l"></i>
+    <i class="rstone rtower r"></i>
+    <i class="rtcren r"></i>
+    <i class="rstone rkeep"></i>
+    <i class="rkcren"></i>
+    <i class="rgate"></i>
+    <i class="rwin" style="left:21%; bottom:150px"></i>
+    <i class="rwin" style="left:77%; bottom:160px"></i>
+    <i class="rwin" style="left:49.3%; bottom:110px"></i>
+    <i class="rmist"></i>
+  </div>
+  <div class="sc sc-space">
+    <div class="sp-ringset back"><i class="sps r1"></i><i class="sps r2"></i><i class="sps r3"></i><i class="sps r4"></i></div>
+    <i class="sp-planet"></i>
+    <div class="sp-ringset front"><i class="sps r1"></i><i class="sps r2"></i><i class="sps r3"></i><i class="sps r4"></i></div>
+  </div>
+  <!-- animated layers: shown when "Animowane" is selected -->
+  <div class="fx fx-neon">
+    <i class="orb o1"></i><i class="orb o2"></i><i class="orb o3"></i>
+    <i class="streak"></i><i class="scanlines"></i><i class="scan"></i>
+  </div>
+  <div class="fx fx-rune">
+    <i class="aura"></i>
+    <i class="rrock" style="--l:8%;  --s:24px; --d:7s;   --del:-1s;   --dx:3vw;   clip-path: polygon(8% 22%, 38% 0%, 72% 12%, 96% 40%, 82% 78%, 45% 100%, 12% 70%)"></i>
+    <i class="rrock" style="--l:24%; --s:16px; --d:9s;   --del:-4s;   --dx:-2vw;  clip-path: polygon(20% 0%, 85% 10%, 100% 55%, 70% 95%, 25% 100%, 0% 45%)"></i>
+    <i class="rrock" style="--l:40%; --s:30px; --d:6.5s; --del:-2.5s; --dx:2vw;   clip-path: polygon(0% 30%, 30% 4%, 75% 0%, 100% 35%, 88% 80%, 50% 100%, 8% 88%)"></i>
+    <i class="rrock" style="--l:55%; --s:14px; --d:10s;  --del:-6s;   --dx:-3vw;  clip-path: polygon(15% 5%, 90% 15%, 100% 60%, 60% 100%, 5% 90%, 0% 40%)"></i>
+    <i class="rrock" style="--l:68%; --s:22px; --d:7.5s; --del:-3.5s; --dx:2.5vw; clip-path: polygon(0% 15%, 45% 0%, 95% 20%, 100% 70%, 55% 100%, 10% 75%)"></i>
+    <i class="rrock" style="--l:82%; --s:18px; --d:9.5s; --del:-8s;   --dx:-2vw;  clip-path: polygon(10% 0%, 70% 8%, 100% 45%, 75% 95%, 20% 100%, 0% 55%)"></i>
+    <i class="rrock" style="--l:93%; --s:26px; --d:6.8s; --del:-5s;   --dx:1.5vw; clip-path: polygon(25% 0%, 95% 10%, 100% 60%, 65% 100%, 15% 92%, 0% 30%)"></i>
+    <i class="ember" style="left:14%; --s:4px; --d:11s;  --del:-4s;   --dx:-3vw; --c:#ff9b3d"></i>
+    <i class="ember" style="left:40%; --s:5px; --d:10s;  --del:-7s;   --dx:3vw;  --c:#b58cff"></i>
+    <i class="ember" style="left:70%; --s:4px; --d:9s;   --del:-3s;   --dx:-5vw; --c:#ff9b3d"></i>
+    <i class="ember" style="left:88%; --s:6px; --d:9.5s; --del:-1.5s; --dx:3vw"></i>
+  </div>
+  <div class="fx fx-space">
+    <i class="starfield sf1"></i><i class="starfield sf2"></i><i class="starfield sf3"></i>
+    <i class="shoot sh1"></i><i class="shoot sh2"></i>
+    <i class="twinkle" style="left:8%;  top:22%; --s:3px; --d:3.2s; --del:-0.4s"></i>
+    <i class="twinkle" style="left:16%; top:64%; --s:5px; --d:4.6s; --del:-2.1s; --c:#cfe4ff; --halo:rgba(154,220,255,.45)"></i>
+    <i class="twinkle" style="left:27%; top:14%; --s:4px; --d:5.2s; --del:-3.8s"></i>
+    <i class="twinkle" style="left:34%; top:78%; --s:3px; --d:2.9s; --del:-1.3s"></i>
+    <i class="twinkle" style="left:43%; top:38%; --s:6px; --d:4.1s; --del:-2.7s; --c:#fff3d6; --halo:rgba(255,215,122,.45)"></i>
+    <i class="twinkle" style="left:52%; top:12%; --s:3px; --d:3.6s; --del:-0.9s"></i>
+    <i class="twinkle" style="left:58%; top:66%; --s:4px; --d:5.6s; --del:-4.4s; --c:#cfe4ff"></i>
+    <i class="twinkle" style="left:66%; top:30%; --s:5px; --d:3.9s; --del:-1.8s"></i>
+    <i class="twinkle" style="left:73%; top:82%; --s:3px; --d:4.8s; --del:-3.1s"></i>
+    <i class="twinkle" style="left:81%; top:20%; --s:4px; --d:3.3s; --del:-2.4s; --c:#fff3d6; --halo:rgba(255,215,122,.45)"></i>
+    <i class="twinkle" style="left:88%; top:55%; --s:6px; --d:5.0s; --del:-1.1s; --c:#cfe4ff; --halo:rgba(154,220,255,.45)"></i>
+    <i class="twinkle" style="left:94%; top:38%; --s:3px; --d:2.7s; --del:-3.6s"></i>
+    <i class="spark" style="left:22%; top:32%; --s:34px; --d:5.5s; --del:-1.2s"></i>
+    <i class="spark" style="left:38%; top:16%; --s:26px; --d:4.8s; --del:-3.4s; --c:#ffe8c0; --sp:rgba(255,228,175,.95); --gl:rgba(255,215,122,.85); --gl2:rgba(255,215,122,.35)"></i>
+    <i class="spark" style="left:63%; top:46%; --s:40px; --d:6.2s; --del:-0.4s; --c:#d8ecff; --sp:rgba(205,228,255,.95); --gl:rgba(154,220,255,.85); --gl2:rgba(154,220,255,.35)"></i>
+    <i class="spark" style="left:78%; top:22%; --s:24px; --d:4.4s; --del:-2.6s"></i>
+    <i class="spark" style="left:48%; top:72%; --s:28px; --d:5.1s; --del:-4.2s"></i>
+    <i class="spark" style="left:88%; top:74%; --s:30px; --d:5.8s; --del:-1.8s; --c:#ffe8c0; --sp:rgba(255,228,175,.9); --gl:rgba(255,215,122,.75)"></i>
+  </div>
+</div>
+<div class="wrap">
+  <div class="boardwrap">
+    <canvas id="board" width="300" height="600"></canvas>
+    <div id="gameover">
+      <h2 data-i18n="go1">GAME OVER</h2>
+      <p data-i18n="go2">Press R to play again</p>
+      <p data-i18n="go3">Press C to see credits</p>
+      <p data-i18n="go4">Press Esc to see the menu</p>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="phead">
+      <span class="brand">BRICKLORIAN</span>
+      <button id="menuBtn" class="btn small">☰</button>
+    </div>
+    <div class="box">
+      <div class="label" data-i18n="score">SCORE</div>
+      <div class="value" id="score">0</div>
+    </div>
+    <div class="box">
+      <div class="label" data-i18n="lines">LINES</div>
+      <div class="value" id="lines">0</div>
+    </div>
+    <div class="box">
+      <div class="label" data-i18n="next">NEXT</div>
+      <canvas id="next" width="100" height="100"></canvas>
+    </div>
+    <div class="help">
+      <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <span data-i18n="h_move">move</span><br>
+      <kbd>&uarr;</kbd> <span data-i18n="h_rot">rotate</span><br>
+      <kbd>&darr;</kbd> <span data-i18n="h_soft">drop</span><br>
+      <kbd data-i18n="k_space">Space</kbd> <span data-i18n="h_hard">hard drop</span><br>
+      <kbd>P</kbd> <span data-i18n="h_pause">pause</span><br>
+      <kbd>R</kbd> <span data-i18n="h_restart">restart</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MAIN MENU ============ -->
+<div id="menu">
+  <div class="menu-card">
+    <div class="logo-kicker" data-i18n="kicker">WELCOME TO</div>
+    <h1 id="logo">BRICKLORIAN</h1>
+    <div class="motto">This is the way... to stack bricks.</div>
+    <p class="tagline" data-i18n="tagline">Classic falling-block mechanics reimagined. Pick your theme, clear lines, and watch them burst — before the bricks hit the ceiling.</p>
+
+    <div class="pick-label" data-i18n="pick">— CHOOSE A STYLE —</div>
+    <div class="themes">
+      <button class="tcard" data-theme="classic">
+        <div class="sw"><i style="background:#b48cff"></i><i style="background:#ff5c9e"></i><i style="background:#d8e84f"></i><i style="background:#aab6c4"></i></div>
+        <b>CLASSIC</b><span data-i18n="d_classic">80s arcade vibe — pure, simple retro.</span>
+      </button>
+      <button class="tcard" data-theme="neon">
+        <div class="sw"><i style="background:#ff2fd6"></i><i style="background:#00f8ff"></i><i style="background:#23ff66"></i><i style="background:#ffde00"></i></div>
+        <b>NEON CITY</b><span data-i18n="d_neon">Neon, chrome and the night city</span>
+      </button>
+      <button class="tcard" data-theme="rune">
+        <div class="sw"><i style="background:#4f8f42"></i><i style="background:#d9b34a"></i><i style="background:#5a6b8f"></i><i style="background:#8f4a63"></i></div>
+        <b>RUNE REALM</b><span data-i18n="d_rune">Gold, runes and enchanted stones</span>
+      </button>
+      <button class="tcard" data-theme="space">
+        <div class="sw"><i style="background:#c8a8e8"></i><i style="background:#6fd8a8"></i><i style="background:#c4ccd8"></i><i style="background:#3f8fc8"></i></div>
+        <b>STAR DRIFT</b><span data-i18n="d_space">Star fields, gold and steel</span>
+      </button>
+    </div>
+
+    <div class="langrow">
+      <span class="lbl" data-i18n="lang">LANGUAGE</span>
+      <div class="langdd" id="langdd">
+        <button class="langbtn" id="langBtn" type="button">English ▾</button>
+        <div class="langmenu" id="langMenu" role="menu"></div>
+      </div>
+    </div>
+
+    <div class="bgrow">
+      <span class="lbl" data-i18n="bg">BACKGROUND</span>
+      <button class="seg" data-bg="static" data-i18n="st">Static</button>
+      <button class="seg" data-bg="anim" data-i18n="an">Animated</button>
+    </div>
+
+    <button id="play" class="btn big" disabled>▶ &nbsp;<span data-i18n="play">PLAY</span></button>
+
+    <div class="controls">
+      <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <span data-i18n="h_move">move</span> &nbsp;&nbsp; <kbd>&uarr;</kbd> <span data-i18n="h_rot">rotate</span> &nbsp;&nbsp; <kbd>&darr;</kbd> <span data-i18n="h_soft">drop</span> &nbsp;&nbsp;
+      <kbd data-i18n="k_space">Space</kbd> <span data-i18n="h_hard">hard drop</span> &nbsp;&nbsp; <kbd>P</kbd> <span data-i18n="h_pause">pause</span> &nbsp;&nbsp; <kbd>R</kbd> <span data-i18n="h_restart">restart</span> &nbsp;&nbsp; <kbd>Esc</kbd> <span data-i18n="h_menu">menu</span>
+    </div>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/music.js"></script>
+<script src="js/sfx.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/render.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

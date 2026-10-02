@@ -1,0 +1,228 @@
+/* BRICKLORIAN
+   Created by Mariusz Aleksandrowicz via AI-driven workflows.
+   Licensed under the MIT License. */
+  /* ============ ANIMATED BACKGROUND (non-classic themes) ============ */
+  #bgfx { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  #bgfx .fx { position: absolute; inset: 0; }
+  .fx-neon, .fx-rune, .fx-space { display: none; }
+  #bgfx .fx i { display: block; position: absolute; }
+  body.bg-anim[data-theme="neon"] .fx-neon { display: block; }
+  body.bg-anim[data-theme="rune"] .fx-rune { display: block; }
+  body.bg-anim[data-theme="space"] .fx-space { display: block; }
+
+  /* --- NEON CITY: drifting orbs, traveling light streak, CRT scan --- */
+  .fx-neon .orb { border-radius: 50%; filter: blur(60px); opacity: .5; }
+  .fx-neon .o1 { width: 420px; height: 420px; left: -120px; top: -100px;
+    background: radial-gradient(circle, rgba(0,248,255,.5), transparent 70%);
+    animation: a-drift1 14s ease-in-out infinite alternate; }
+  .fx-neon .o2 { width: 520px; height: 520px; right: -160px; bottom: -150px;
+    background: radial-gradient(circle, rgba(255,47,214,.45), transparent 70%);
+    animation: a-drift2 18s ease-in-out infinite alternate; }
+  .fx-neon .o3 { width: 300px; height: 300px; left: 38%; top: 55%;
+    background: radial-gradient(circle, rgba(140,70,255,.4), transparent 70%);
+    animation: a-drift3 12s ease-in-out infinite alternate; }
+  @keyframes a-drift1 { to { transform: translate(90px, 60px) scale(1.15); } }
+  @keyframes a-drift2 { to { transform: translate(-80px, -70px) scale(1.1); } }
+  @keyframes a-drift3 { to { transform: translate(-60px, 90px) scale(.9); } }
+
+  .fx-neon .streak { inset: 0;
+    background: linear-gradient(115deg, transparent 42%, rgba(0,248,255,.08) 47%,
+                rgba(255,47,214,.12) 50%, rgba(0,248,255,.08) 53%, transparent 58%);
+    background-size: 300% 100%;
+    animation: a-sweep 11s linear infinite; }
+  @keyframes a-sweep { from { background-position: 260% 0; } to { background-position: -160% 0; } }
+
+  .fx-neon .scanlines { inset: 0; opacity: .08;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,.8) 0 2px, transparent 2px 4px); }
+  .fx-neon .scan { left: 0; right: 0; height: 90px; top: -90px;
+    background: linear-gradient(180deg, transparent, rgba(0,248,255,.10) 55%, rgba(255,255,255,.4) 100%);
+    animation: a-scandrop 7s linear infinite; }
+  @keyframes a-scandrop { from { top: -12%; } to { top: 112%; } }
+
+  /* --- RUNE REALM: pulsing aura + rising embers --- */
+  .fx-rune .aura { left: 50%; top: 50%; width: 82vmin; height: 82vmin; transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(224,163,60,.16), rgba(142,90,37,.06) 45%, transparent 70%);
+    animation: a-pulse 6s ease-in-out infinite; }
+  @keyframes a-pulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+  .fx-rune .ember { bottom: -14px; width: var(--s); height: var(--s); border-radius: 50%;
+    background: var(--c, #ffcf7a);
+    box-shadow: 0 0 8px 2px rgba(255,179,71,.75), 0 0 18px 5px rgba(255,120,40,.3);
+    opacity: 0; animation: a-rise var(--d, 9s) linear infinite; animation-delay: var(--del, 0s); }
+  @keyframes a-rise {
+    0% { transform: translate(0, 0) scale(1); opacity: 0; }
+    10% { opacity: .95; }
+    65% { opacity: .8; }
+    100% { transform: translate(var(--dx, 3vw), -110vh) scale(.15); opacity: 0; }
+  }
+  .fx-rune .rrock { top: -10vh; left: var(--l, 20%); width: var(--s, 22px); height: calc(var(--s, 22px) * .8);
+    background:
+      radial-gradient(circle at 30% 22%, rgba(255,240,214,.4), transparent 46%),
+      linear-gradient(115deg, transparent 0 14%, rgba(255,255,255,.18) 14% 26%, transparent 26% 44%, rgba(0,0,0,.3) 44% 52%, transparent 52%),
+      linear-gradient(160deg, #8a6a44, #5a432c 58%, #3a2a1b);
+    box-shadow: inset -5px -7px 10px rgba(0,0,0,.55), inset 3px 4px 8px rgba(255,214,150,.22);
+    opacity: 0; animation: a-fall var(--d, 7s) linear infinite; animation-delay: var(--del, 0s); }
+  @keyframes a-fall {
+    0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+    7% { opacity: .95; }
+    50% { transform: translate(var(--dx, 2vw), 52vh) rotate(180deg); }
+    93% { opacity: .95; }
+    100% { transform: translate(0, 106vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* --- STAR DRIFT: dense drifting star fields + shooting stars --- */
+  .fx-space .starfield { inset: -25%; background-repeat: repeat; }
+  .fx-space .sf1 {
+    background-image:
+      radial-gradient(1.4px 1.4px at 8% 22%, rgba(255,255,255,.95), transparent 60%),
+      radial-gradient(1px 1px at 21% 64%, rgba(255,255,255,.8), transparent 60%),
+      radial-gradient(1.2px 1.2px at 33% 12%, rgba(200,220,255,.85), transparent 60%),
+      radial-gradient(1px 1px at 44% 83%, rgba(255,255,255,.7), transparent 60%),
+      radial-gradient(1.3px 1.3px at 55% 41%, rgba(255,255,255,.9), transparent 60%),
+      radial-gradient(1px 1px at 66% 9%,  rgba(210,230,255,.8), transparent 60%),
+      radial-gradient(1.1px 1.1px at 74% 58%, rgba(255,255,255,.75), transparent 60%),
+      radial-gradient(1px 1px at 83% 27%, rgba(255,255,255,.65), transparent 60%),
+      radial-gradient(1.3px 1.3px at 91% 76%, rgba(190,215,255,.85), transparent 60%),
+      radial-gradient(1px 1px at 14% 91%, rgba(255,255,255,.7), transparent 60%);
+    background-size: 210px 210px;
+    animation: a-far 240s linear infinite, a-twinkle 4.2s ease-in-out infinite; }
+  .fx-space .sf2 {
+    background-image:
+      radial-gradient(1.9px 1.9px at 12% 35%, rgba(255,255,255,.95), transparent 60%),
+      radial-gradient(1.2px 1.2px at 28% 70%, rgba(190,215,255,.85), transparent 60%),
+      radial-gradient(1.6px 1.6px at 41% 15%, rgba(255,255,255,.8), transparent 60%),
+      radial-gradient(1.2px 1.2px at 58% 52%, rgba(255,255,255,.9), transparent 60%),
+      radial-gradient(1.5px 1.5px at 73% 24%, rgba(200,220,255,.8), transparent 60%),
+      radial-gradient(1.2px 1.2px at 86% 81%, rgba(255,255,255,.75), transparent 60%),
+      radial-gradient(1.4px 1.4px at 95% 45%, rgba(255,255,255,.85), transparent 60%);
+    background-size: 330px 330px;
+    animation: a-near 150s linear infinite reverse, a-twinkle 3.1s ease-in-out infinite; }
+  .fx-space .sf3 {
+    background-image:
+      radial-gradient(2.4px 2.4px at 18% 28%, rgba(255,255,255,.95), transparent 60%),
+      radial-gradient(2px 2px at 47% 72%, rgba(205,228,255,.9), transparent 60%),
+      radial-gradient(2.2px 2.2px at 72% 18%, rgba(255,235,205,.85), transparent 60%),
+      radial-gradient(2px 2px at 88% 55%, rgba(190,215,255,.9), transparent 60%);
+    background-size: 520px 520px;
+    animation: a-deep 420s linear infinite, a-twinkle 5.6s ease-in-out infinite; }
+  @keyframes a-far { to { background-position: 2400px 1200px; } }
+  @keyframes a-near { to { background-position: 1900px 950px; } }
+  @keyframes a-deep { to { background-position: 3600px 1800px; } }
+  @keyframes a-twinkle { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
+  .fx-space .shoot { width: 130px; height: 2px; border-radius: 2px; opacity: 0;
+    background: linear-gradient(90deg, #fff, rgba(255,255,255,0)); }
+  .fx-space .sh1 { animation: a-shoot 9s linear infinite; }
+  .fx-space .sh2 { animation: a-shoot 11s linear infinite; animation-delay: 4.5s; }
+  @keyframes a-shoot {
+    0% { transform: translate(-12vw, 6vh) rotate(26deg); opacity: 0; }
+    3% { opacity: 1; }
+    14% { transform: translate(112vw, 52vh) rotate(26deg); opacity: 0; }
+    100% { transform: translate(112vw, 52vh) rotate(26deg); opacity: 0; }
+  }
+
+  /* STAR DRIFT: individual bright stars that twinkle on/off like a real night sky */
+  .fx-space .twinkle {
+    width: var(--s, 4px); height: var(--s, 4px); border-radius: 50%;
+    background: var(--c, #fff);
+    box-shadow: 0 0 6px 1px rgba(255,255,255,.7), 0 0 16px 5px var(--halo, rgba(160,200,255,.35));
+    opacity: .06;
+    animation: a-star var(--d, 4s) ease-in-out infinite;
+    animation-delay: var(--del, 0s);
+  }
+  @keyframes a-star {
+    0%, 100% { opacity: .05; transform: scale(.55); }
+    45%, 55% { opacity: 1; transform: scale(1.35); }
+  }
+
+  /* STAR DRIFT: 4-point diffraction spikes — the "movie" star twinkle, flaring up and fading out */
+  .fx-space .spark {
+    width: var(--s, 30px); height: var(--s, 30px);
+    background:
+      radial-gradient(circle, var(--c, #fff) 0 14%, rgba(255,255,255,0) 19%),
+      linear-gradient(0deg,  rgba(255,255,255,0) 44%, var(--sp, rgba(255,255,255,.95)) 49.5% 50.5%, rgba(255,255,255,0) 56%),
+      linear-gradient(90deg, rgba(255,255,255,0) 44%, var(--sp, rgba(255,255,255,.95)) 49.5% 50.5%, rgba(255,255,255,0) 56%);
+    opacity: 0;
+    filter: drop-shadow(0 0 4px var(--gl, rgba(255,255,255,.85))) drop-shadow(0 0 14px var(--gl2, rgba(170,205,255,.4)));
+    animation: a-sparkle var(--d, 5.2s) ease-in-out infinite;
+    animation-delay: var(--del, 0s);
+  }
+  @keyframes a-sparkle {
+    0%, 100% { opacity: 0;   transform: scale(.35); }
+    40%       { opacity: .55; }
+    52%       { opacity: 1;   transform: scale(1.12); }
+    64%       { opacity: .55; }
+  }
+
+  /* ============ STATIC SCENES (always visible for the 3 themed styles) ============ */
+  .sc { position: absolute; inset: 0; display: none; }
+  .sc i { display: block; position: absolute; }
+  body[data-theme="neon"] .sc-neon { display: block; }
+  body[data-theme="rune"] .sc-rune { display: block; }
+  body[data-theme="space"] .sc-space { display: block; }
+
+  /* NEON CITY — retro sun + city skyline */
+  .sc-neon .nsun { left: 50%; top: 26%; width: 360px; height: 360px; transform: translateX(-50%);
+    border-radius: 50%;
+    background:
+      repeating-linear-gradient(0deg, transparent 0 24px, rgba(13,2,33,.5) 24px 28px),
+      linear-gradient(180deg, #ffe94d, #ff2fd6 72%, #8c46ff);
+    filter: drop-shadow(0 0 42px rgba(255,47,214,.5)); opacity: .8; }
+  .sc-neon .nbdg { bottom: 0; background-color: #150a2a;
+    border-top: 3px solid var(--ed, #ff2fd6);
+    box-shadow: 0 -2px 16px -3px var(--ed, #ff2fd6); overflow: hidden; }
+  /* random windows: off = faint cell, on = bright white + glow (toggled by ui.js NWIN) */
+  .sc-neon .nwin { width: 4px; height: 3px; background: rgba(255,255,255,.13);
+    transition: background .55s ease, box-shadow .55s ease; }
+  .sc-neon .nwin.lit { background: #ffffff; box-shadow: 0 0 8px 2px rgba(255,255,255,.8); }
+  .sc-neon .nline { left: 0; right: 0; bottom: 0; height: 3px;
+    background: linear-gradient(90deg, transparent, #ff2fd6 28%, #00f8ff 72%, transparent);
+    box-shadow: 0 0 18px rgba(255,47,214,.7); }
+
+  /* RUNE REALM — moon + castle silhouette */
+  .sc-rune .rmoon { left: 10%; top: 9%; width: 150px; height: 150px; border-radius: 50%;
+    background: radial-gradient(circle at 38% 35%, #fff3d6, #ffd77a 55%, rgba(255,179,71,0) 74%);
+    filter: drop-shadow(0 0 30px rgba(255,179,71,.45)); }
+  .sc-rune .rstone { background: #141009; box-shadow: 0 -2px 22px rgba(224,163,60,.22); }
+  .sc-rune .rwall { left: 24%; right: 24%; bottom: 0; height: 130px; }
+  .sc-rune .rwcren { left: 24%; right: 24%; bottom: 130px; height: 14px;
+    background: repeating-linear-gradient(90deg, #141009 0 20px, transparent 20px 36px); }
+  .sc-rune .rtower { width: 62px; bottom: 0; height: 215px; }
+  .sc-rune .rtower.l { left: 19.5%; }
+  .sc-rune .rtower.r { right: 19.5%; }
+  .sc-rune .rtcren { width: 74px; bottom: 215px; height: 14px;
+    background: repeating-linear-gradient(90deg, #141009 0 20px, transparent 20px 36px); }
+  .sc-rune .rtcren.l { left: calc(19.5% - 6px); }
+  .sc-rune .rtcren.r { right: calc(19.5% - 6px); }
+  .sc-rune .rkeep { left: calc(50% - 48px); width: 96px; bottom: 0; height: 175px; }
+  .sc-rune .rkcren { left: calc(50% - 54px); width: 108px; bottom: 175px; height: 14px;
+    background: repeating-linear-gradient(90deg, #141009 0 20px, transparent 20px 36px); }
+  .sc-rune .rgate { left: calc(50% - 24px); width: 48px; bottom: 0; height: 76px;
+    border-radius: 24px 24px 0 0;
+    background: linear-gradient(180deg, #2a1c10, #141009 70%);
+    box-shadow: inset 0 0 20px rgba(255,179,71,.75), 0 0 18px rgba(255,179,71,.35); }
+  .sc-rune .rwin { width: 9px; height: 15px; border-radius: 4px;
+    background: radial-gradient(circle, #ffd77a, #b26a2a 65%, transparent 75%);
+    box-shadow: 0 0 12px 3px rgba(255,179,71,.65); }
+  .sc-rune .rmist { left: -8%; right: -8%; height: 54px; bottom: 26px; filter: blur(12px);
+    background: linear-gradient(90deg, transparent, rgba(224,163,60,.14), transparent); }
+
+  /* STAR DRIFT — planet with ring */
+  /* STAR DRIFT — Saturn: nested rings, far half behind the planet, near half in front */
+  .sc-space .sp-ringset {
+    position: absolute;
+    left: calc(50% - 180px); bottom: -100px; width: 760px; height: 220px;
+    transform: rotate(-14deg);
+  }
+  .sc-space .sp-ringset.back  { z-index: 0; clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
+  .sc-space .sp-ringset.front { z-index: 2; clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%); }
+  .sc-space .sp-ringset i { left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%; }
+  .sc-space .sps.r1 { width: 480px; height: 130px; border: 14px solid rgba(232,204,140,.58); }
+  .sc-space .sps.r2 { width: 572px; height: 160px; border: 9px solid rgba(213,178,74,.42);
+    box-shadow: 0 0 18px rgba(213,178,74,.28); }
+  .sc-space .sps.r3 { width: 654px; height: 190px; border: 5px solid rgba(224,196,128,.34); }
+  .sc-space .sps.r4 { width: 742px; height: 214px; border: 3px solid rgba(213,178,74,.22); }
+  .sc-space .sp-planet { z-index: 1; left: 50%; bottom: -190px; width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #b7e3ff 0%, #5d8fd6 30%, #22407c 58%, #060b1d 92%);
+    box-shadow: inset -30px -34px 80px rgba(1,3,12,.9), 0 0 60px rgba(90,130,220,.28); }
+
+  /* Classic always stays static — dim the "animated" option */
+  body[data-theme="classic"] .seg[data-bg="anim"] { opacity: .4; cursor: not-allowed; }
